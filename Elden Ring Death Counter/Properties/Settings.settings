@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Elden_Ring_Death_Counter.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SaveFileLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C://Test//File//Path</Value>
+    </Setting>
+    <Setting Name="IncrementKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">T</Value>
+    </Setting>
+    <Setting Name="IncrementModifier" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ctrl</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

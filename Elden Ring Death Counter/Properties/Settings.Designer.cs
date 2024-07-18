@@ -58,5 +58,17 @@ namespace Elden_Ring_Death_Counter.Properties {
                 this["IncrementModifier"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int IncrementByValue {
+            get {
+                return ((int)(this["IncrementByValue"]));
+            }
+            set {
+                this["IncrementByValue"] = value;
+            }
+        }
     }
 }

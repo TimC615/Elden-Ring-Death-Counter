@@ -1,22 +1,8 @@
-﻿using Microsoft.VisualBasic.Logging;
-using OBSWebsocketDotNet.Types;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static System.Resources.ResXFileRef;
 
 namespace Elden_Ring_Death_Counter
 {
@@ -61,6 +47,8 @@ namespace Elden_Ring_Death_Counter
                     break;
             }
             IncrementKeyTextBox.Text = Properties.Settings.Default.IncrementKey;
+
+            IncrementIntegerTextBox.Text = Properties.Settings.Default.IncrementByValue.ToString();
         }
 
         private void UpdateFilePath_Click(object sender, RoutedEventArgs e)
@@ -99,6 +87,13 @@ namespace Elden_Ring_Death_Counter
             }
         }
 
+        //allows only numbers into text box
+        private void IncrementIntegerTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
         private void ApplyChanges_Click(object sender, RoutedEventArgs e)
         {
             //update saved key
@@ -117,6 +112,20 @@ namespace Elden_Ring_Death_Counter
 
             //update saved file path
             Properties.Settings.Default.SaveFileLocation = FilePathTextBox.Text;
+
+            //update increment by value
+            int increment;
+            try
+            {
+                increment = Int32.Parse(IncrementIntegerTextBox.Text);
+            }
+            catch(Exception except)
+            {
+                Trace.WriteLine($"Save Increment By Error: {except.ToString()}");
+                increment = 0;
+            }
+            Properties.Settings.Default.IncrementByValue = increment;
+
 
             //save changes
             Properties.Settings.Default.Save();

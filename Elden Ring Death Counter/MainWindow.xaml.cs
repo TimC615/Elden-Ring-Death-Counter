@@ -1,21 +1,7 @@
-﻿using OBSWebsocketDotNet.Types;
-using OBSWebsocketDotNet;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Diagnostics;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using Microsoft.VisualBasic;
 using System.IO;
-using static System.Windows.Forms.LinkLabel;
 using System.ComponentModel;
 
 namespace Elden_Ring_Death_Counter
@@ -28,7 +14,7 @@ namespace Elden_Ring_Death_Counter
     public partial class MainWindow : Window
     {
         //global variables
-        int deathCounter = 0;
+        int deathCounter = 0;       //could be used to hold current death counter if writing to file fails for whatever reason
         GlobalHotKey currentHotKey = null;
         bool enableIncrementFlag = false;
         int counterValue = 0;
@@ -95,6 +81,18 @@ namespace Elden_Ring_Death_Counter
             HotkeysManager.ShutdownSystemHook();
 
         }
+
+        private void DecrementCounter_Click(object sender, RoutedEventArgs e)
+        {
+            //decrement counter file by 1
+            AlterCounterFile(-1);
+        }
+
+        private void ResetCounter_Click(object sender, RoutedEventArgs e)
+        {
+            AlterCounterFile(0, true);
+        }
+
         //----------------------End of UI Interaction Methods----------------------
 
         //read current counter value from user-defined text file, increment, and write to file
@@ -102,16 +100,29 @@ namespace Elden_Ring_Death_Counter
         {
             if (enableIncrementFlag)
             {
-                //Log($"Hotkey Triggered \tKey: {Properties.Settings.Default.IncrementKey}\tModifier:{Properties.Settings.Default.IncrementModifier}");
-                //Log($"Hotkey");
-                string filePath = Properties.Settings.Default.SaveFileLocation;
-                string fileName = System.IO.Path.GetFileName(filePath);
-                string[] fileInput;
+                AlterCounterFile(Properties.Settings.Default.IncrementByValue);
+            }
+        }
 
-                //handles if provided file path is accessable or not
-                if (!File.Exists(filePath))
+
+        //method responsible for incrementing/resetting counter text file
+        private void AlterCounterFile(int increment, bool resetCounter = false)
+        {
+            string filePath = Properties.Settings.Default.SaveFileLocation;
+            string fileName = System.IO.Path.GetFileName(filePath);
+            string[] fileInput;
+
+            //handles if provided file path is accessable or not
+            if (!File.Exists(filePath))
+            {
+                Log($"There was an issue with the selected file. Please make sure file path is set to a readable text file.");
+            }
+            else
+            {
+                if (resetCounter)
                 {
-                    Log($"There was an issue with the selected file. Please make sure file path is set to a readable text file.");
+                    counterValue = 0;
+                    Log($"Counter has been reset to 0");
                 }
                 else
                 {
@@ -152,18 +163,22 @@ namespace Elden_Ring_Death_Counter
                         }
                     }
 
-                    counterValue++;
+                    //actually changes the value
+                    counterValue = counterValue + increment;
 
                     Log($"New Death. Counter now at {counterValue}");
+                }
 
-                    try
-                    {
-                        File.WriteAllText(filePath, counterValue.ToString());
-                    }
-                    catch (Exception e)
-                    {
-                        Log($"Write to {fileName} error: {e.Message}");
-                    }
+                
+
+                //writes new value to file
+                try
+                {
+                    File.WriteAllText(filePath, counterValue.ToString());
+                }
+                catch (Exception e)
+                {
+                    Log($"Write to {fileName} error: {e.Message}");
                 }
             }
         }

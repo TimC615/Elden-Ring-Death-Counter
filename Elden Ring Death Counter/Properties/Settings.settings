@@ -11,5 +11,8 @@
     <Setting Name="IncrementModifier" Type="System.String" Scope="User">
       <Value Profile="(Default)">Ctrl</Value>
     </Setting>
+    <Setting Name="IncrementByValue" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

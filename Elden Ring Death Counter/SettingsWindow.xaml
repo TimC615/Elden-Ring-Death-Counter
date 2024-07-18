@@ -19,21 +19,24 @@
             <StackPanel Name="IncrementKeyStack" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
                 <Label Content="Increment Key:" HorizontalAlignment="Left" Margin="10,0,10,0" VerticalAlignment="Center"/>
                 <TextBox Name="IncrementKeyTextBox" HorizontalAlignment="Left" Margin="0,0,10,0" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Width="95" IsReadOnly="True" PreviewKeyDown="IncrementKeyTextBox_PreviewKeyDown"/>
+
+                <Label Content="Modifier Key:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                <ComboBox Name="ModifierKeyDropDown" SelectedValuePath="Content" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="95">
+                    <!-- IsEditable="True" IsReadOnly="True" -->
+                    <ComboBoxItem Content="None"/>
+                    <ComboBoxItem Content="Alt"/>
+                    <ComboBoxItem Content="Ctrl"/>
+                    <ComboBoxItem Content="Shift"/>
+                    <ComboBoxItem Content="Windows"/>
+                </ComboBox>
             </StackPanel>
 
 
 
             <Grid>
                 <StackPanel Orientation ="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Center">
-                    <Label Content="Modifier Key:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                    <ComboBox Name="ModifierKeyDropDown" SelectedValuePath="Content" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="95">
-                        <!-- IsEditable="True" IsReadOnly="True" -->
-                        <ComboBoxItem Content="None"/>
-                        <ComboBoxItem Content="Alt"/>
-                        <ComboBoxItem Content="Ctrl"/>
-                        <ComboBoxItem Content="Shift"/>
-                        <ComboBoxItem Content="Windows"/>
-                    </ComboBox>
+                    <Label Content="Value added each detection:" HorizontalAlignment="Left" Margin="10,0,10,0" VerticalAlignment="Center"/>
+                    <TextBox Name="IncrementIntegerTextBox" PreviewTextInput="IncrementIntegerTextBox_PreviewTextInput" Margin="0,0,10,0" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Width="65"/>
                 </StackPanel>
                 <Button Content="Apply Changes" HorizontalAlignment="Right" VerticalAlignment="Center" Width="95" Click="ApplyChanges_Click" Margin="0,0,10,0"/>
             </Grid>
